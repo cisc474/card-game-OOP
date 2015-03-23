@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html data-ng-app="theGame">
+  <head>
+    <link data-require="bootstrap-css@*" data-semver="3.3.1" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+    <script data-require="angular.js@*" data-semver="1.4.0-beta.6" src="https://code.angularjs.org/1.4.0-beta.6/angular.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body data-ng-controller="warBrain">
+    <h1>War!</h1>
+    <h2 ng-if="game.winner">Winner is <span ng-bind="game.winner"></span>.  <button type="button" class="btn btn-info" ng-click="restart()">Play Again?</button></h2>
+    <div ng-if="!game.winner">
+      <button type="button" class="btn btn-std" ng-click="game.rounds(1)">Play one round</button>
+      <button type="button" class="btn btn-warning" ng-click="game.rounds(10)">Play ten rounds</button>
+      <button type="button" class="btn btn-danger" ng-click="game.rounds(100)">Play one hundred rounds</button>
+      <hr>
+      <div class="player1">
+        <strong>Player 1 </strong> has {{ game.player1.totalCards() }} cards
+      </div>
+      <div class="player2">
+        <strong>Player 2 </strong> has {{ game.player2.totalCards() }} cards
+      </div>
+    </div>
+    <hr>
+    <div class="round-cards" data-ng-repeat="rnd in game.log | orderBy:'-number'">
+      <strong>Round {{rnd.number}} cards:</strong>
+      <ul>
+        <li data-ng-repeat="card in rnd.p1active">Player 1: {{card.display}}</li>
+        <li data-ng-repeat="card in rnd.p2active">Player 2: {{card.display}}</li>
+      </ul>
+      <strong>Round winner: {{rnd.round_winner}}</strong>
+      <ul>
+        <li>Resulting Cards Player 1: <strong>{{rnd.p1total}}</strong></li>
+        <li>Resulting Cards Player 2: <strong>{{rnd.p2total}}</strong></li>    
+      </ul>
+      <hr>
+    </div>
+    <script src="script2.js"></script>
+  </body>
+</html>
